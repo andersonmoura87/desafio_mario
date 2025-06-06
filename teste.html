@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard da Metas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- Nuvens -->
+    <div class="cloud cloud-1" style="background-image: url('imagens/nuvem1.png');"></div>
+    <div class="cloud cloud-2" style="background-image: url('imagens/nuvem2.png');"></div>
+    <!-- Cabeçalho -->
+    <div class="header">
+      <h1>DASHBOARD DA METAS</h1>
+    </div>
+    <!-- Seção de progresso -->
+    <div class="progress-section">
+      <h2>PROGRESSO DA META PRINCIPAL</h2>
+      <div class="progress-info">
+        <div class="coin" style="background-image: url('imagens/moeda.jpg');"></div>
+        <div class="percentage"><span id="percent-text">0%</span></div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar" id="bar">
+          <div class="progress-fill" id="fill"></div>
+          <div id="mario" class="mario-icon" style="background-image: url('imagens/mario.jpg');"></div>
+        </div>
+        <div class="progress-labels">
+          <span>0</span><span>25</span><span>50</span><span>75</span><span>100</span>
+        </div>
+      </div>
+      <div class="update-section">
+        <span class="progress-label-text">Progresso (%):</span>
+        <input type="number" id="progresso" value="15" min="0" max="100" style="width: 60px; text-align: center; font-family: 'Press Start 2P', cursive; font-size: 14px;">
+        <button class="btn" onclick="atualizar()">ATUALIZAR</button>
+      </div>
+    </div>
+    <!-- Seção de conquistas -->
+    <div class="achievement-section conquista" id="conquista">
+      <h3 class="conquista-text">NOVA CONQUISTA DESBLOQUEADA</h3>
+      <button class="btn achievement-btn">DESVENDAR DADOS</button>
+    </div>
+    <!-- Cena de rodapé ajustada -->
+    <div class="footer-scene" style="position:relative; height: 150px; margin-top: 20px;">
+      <img src="imagens/arte_pixel_retro.png" alt="Cenário Mario" style="width:100%; height:100%; object-fit:cover; position:absolute; left:0; top:0; z-index:0;">
+    </div>
+    <div class="footer" style="text-align:center; margin-top:10px; color:#333; font-size:12px;">
+      © 2025 Desenvolvido por Brenda Lice
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
+

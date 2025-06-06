@@ -1,0 +1,331 @@
+/* Importando fonte pixelada */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* Reset e estilos gerais */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Press Start 2P', cursive;
+    background-color: #f5e6ba; /* Cor de fundo bege similar ao da imagem */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Container principal */
+.dashboard-container {
+    width: 100%;
+    max-width: 500px;
+    background-color: #2c71b8; /* Azul do céu */
+    border: 10px solid #8b4513; /* Borda marrom */
+    border-radius: 20px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 0 4px #5e2c0b, inset 0 0 0 4px #5e2c0b;
+    padding: 10px;
+}
+
+/* Estilo do céu com grid */
+.dashboard-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 10px 10px;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Nuvens */
+.cloud {
+    position: absolute;
+    z-index: 1;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.cloud-1 {
+    width: 80px;
+    height: 40px;
+    top: 40px;
+    left: 50px;
+    background-image: url('images/cloud.svg');
+}
+
+.cloud-2 {
+    width: 100px;
+    height: 50px;
+    top: 60px;
+    right: 40px;
+    background-image: url('images/cloud.svg');
+}
+
+/* Cabeçalho */
+.header {
+    position: relative;
+    text-align: center;
+    padding: 20px 0;
+    z-index: 2;
+}
+
+h1 {
+    color: #ffd700; /* Dourado */
+    font-size: 24px;
+    text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+    margin-top: 60px;
+}
+
+/* Seção de progresso */
+.progress-section {
+    background-color: #1a4b8c; /* Azul mais escuro */
+    border: 4px solid #ffd700; /* Borda dourada */
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.progress-section h2 {
+    color: #ffffff; /* Branco */
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+/* Informações de progresso */
+.progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.coin {
+    width: 30px;
+    height: 30px;
+    background-image: url('images/coin.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.percentage {
+    color: #ffffff;
+    font-size: 24px;
+    text-align: center;
+    flex-grow: 1;
+}
+
+/* Barra de progresso */
+.progress-bar-container {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.progress-bar {
+    height: 30px;
+    background-color: #8b4513; /* Marrom */
+    border: 2px solid #000;
+    position: relative;
+}
+
+.progress-fill {
+    height: 100%;
+    background-color: #ff4500; /* Vermelho-laranja */
+    background-image: repeating-linear-gradient(45deg, transparent, transparent 10px, #ff6347 10px, #ff6347 20px);
+}
+
+.mario-icon, #mario {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: 0;
+    left: 0;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    z-index: 2;
+    transition: left 0.4s cubic-bezier(.4,2,.6,1);
+}
+
+/* Rótulos da barra de progresso */
+.progress-labels {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.progress-labels span {
+    color: #ffffff;
+    font-size: 12px;
+}
+
+/* Seção de atualização */
+.update-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.progress-label-text {
+    color: #ffffff;
+    font-size: 14px;
+}
+
+/* Botões */
+.btn {
+    background-color: #ffd700; /* Dourado */
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 12px;
+    cursor: pointer;
+    position: relative;
+    border-radius: 5px;
+    box-shadow: 0 4px 0 #b8860b, 0 6px 0 #000;
+}
+
+.btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 2px solid #000;
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+.btn:hover {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #b8860b, 0 4px 0 #000;
+}
+
+.btn:active {
+    transform: translateY(4px);
+    box-shadow: 0 0 0 #b8860b, 0 2px 0 #000;
+}
+
+/* Seção de conquistas */
+.achievement-section {
+    text-align: center;
+    margin: 20px 0;
+    z-index: 2;
+    position: relative;
+}
+
+.achievement-section h3 {
+    color: #ffd700; /* Dourado */
+    font-size: 16px;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;
+}
+
+.achievement-btn {
+    padding: 12px 20px;
+    font-size: 14px;
+}
+
+/* Cena de rodapé */
+.footer-scene {
+    height: 150px;
+    position: relative;
+    margin-top: 20px;
+    z-index: 2;
+}
+
+.ground {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 40px;
+    background-color: #8b4513; /* Marrom */
+    border-top: 4px solid #000;
+}
+
+.hill {
+    position: absolute;
+    bottom: 40px;
+    left: 20px;
+    width: 100px;
+    height: 80px;
+    background-color: #32cd32; /* Verde */
+    border-radius: 50% 50% 0 0;
+    border: 2px solid #000;
+}
+
+.pipe {
+    position: absolute;
+    bottom: 40px;
+    right: 40px;
+    width: 40px;
+    height: 60px;
+    background-image: url('images/pipe.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.mario-char {
+    position: absolute;
+    bottom: 40px;
+    left: 150px;
+    width: 40px;
+    height: 60px;
+    background-image: url('images/mario.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.goomba-char {
+    position: absolute;
+    bottom: 40px;
+    left: 250px;
+    width: 30px;
+    height: 30px;
+    background-image: url('images/goomba.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+/* Responsividade */
+@media (max-width: 500px) {
+    h1 {
+        font-size: 18px;
+    }
+    
+    .progress-section h2,
+    .achievement-section h3 {
+        font-size: 14px;
+    }
+    
+    .btn {
+        font-size: 10px;
+        padding: 8px 12px;
+    }
+    
+    .percentage {
+        font-size: 20px;
+    }
+}

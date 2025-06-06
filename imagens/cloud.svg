@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 32">
+  <!-- Base da nuvem -->
+  <rect x="8" y="16" width="48" height="12" fill="#FFFFFF"/>
+  
+  <!-- Topo da nuvem -->
+  <rect x="12" y="8" width="12" height="8" fill="#FFFFFF"/>
+  <rect x="28" y="4" width="16" height="12" fill="#FFFFFF"/>
+  <rect x="48" y="12" width="8" height="4" fill="#FFFFFF"/>
+  
+  <!-- Contorno -->
+  <path d="M8,16 H56 V28 H8 Z M12,8 H24 V16 M28,4 H44 V16 M48,12 H56 V16" fill="none" stroke="#CCCCCC" stroke-width="1"/>
+</svg>
