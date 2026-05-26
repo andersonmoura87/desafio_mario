@@ -3,11 +3,12 @@ Testes da API Nintendo Stock Quest.
 Execução: pytest tests/ -v
 """
 
-import pytest
-from fastapi.testclient import TestClient
+import os
+import sys
 from unittest.mock import MagicMock, patch
 
-import sys, os
+import pytest
+from fastapi.testclient import TestClient
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 

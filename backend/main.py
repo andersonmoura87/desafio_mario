@@ -9,13 +9,12 @@ import time
 import uuid
 from collections import defaultdict
 from datetime import datetime, timezone
+
+import database
 import yfinance as yf
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import PlainTextResponse
-
-import database
-
 
 # ─── Logging estruturado (JSON) ───────────────────────────────────────────────
 
