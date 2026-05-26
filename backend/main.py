@@ -9,16 +9,16 @@ import time
 import uuid
 from collections import defaultdict
 from datetime import datetime, timezone
-from typing import Optional
-
 import yfinance as yf
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, PlainTextResponse
+from fastapi.responses import PlainTextResponse
 
 import database
 
+
 # ─── Logging estruturado (JSON) ───────────────────────────────────────────────
+
 
 class JSONFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:  # noqa: A003
@@ -142,10 +142,10 @@ def health() -> dict:
 @app.get("/metrics", response_class=PlainTextResponse,
          summary="Métricas Prometheus", tags=["Observabilidade"])
 def prometheus_metrics() -> str:
-    req    = int(_counters["http_requests_total"])
-    err    = int(_counters["http_errors_total"])
-    dur    = _counters["http_request_duration_ms_total"]
-    avg    = (dur / req) if req > 0 else 0
+    req = int(_counters["http_requests_total"])
+    err = int(_counters["http_errors_total"])
+    dur = _counters["http_request_duration_ms_total"]
+    avg = (dur / req) if req > 0 else 0
     uptime = round(time.time() - _start_time, 1)
 
     lines = [
@@ -191,8 +191,8 @@ def get_stock(symbol: str) -> dict:
 
     try:
         ticker = yf.Ticker(sym)
-        info   = ticker.info or {}
-        hist   = ticker.history(period="1mo")
+        info = ticker.info or {}
+        hist = ticker.history(period="1mo")
 
         price = (
             info.get("currentPrice")
@@ -212,9 +212,9 @@ def get_stock(symbol: str) -> dict:
             or price
         )
 
-        change     = round(price - prev_close, 2)
+        change = round(price - prev_close, 2)
         change_pct = round((change / prev_close) * 100, 2) if prev_close else 0.0
-        history_c  = [round(v, 2) for v in hist["Close"].dropna().tolist()[-30:]]
+        history_c = [round(v, 2) for v in hist["Close"].dropna().tolist()[-30:]]
 
         _inc(f"stock_{sym}_requests_total")
 
@@ -255,7 +255,7 @@ def get_stock(symbol: str) -> dict:
 @app.get("/api/stock/{symbol}/history",
          summary="Histórico persistido no banco", tags=["Stock"])
 def get_stock_history(symbol: str, days: int = 30) -> dict:
-    sym  = symbol.upper()
+    sym = symbol.upper()
     rows = database.get_history(sym, days)
     stats = database.get_stats(sym, days)
     return {
