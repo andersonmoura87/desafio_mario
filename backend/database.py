@@ -30,7 +30,8 @@ def _conn() -> Generator[sqlite3.Connection, None, None]:
 def init_db() -> None:
     """Cria as tabelas se ainda não existirem."""
     with _conn() as conn:
-        conn.executescript("""
+        conn.executescript(
+            """
             CREATE TABLE IF NOT EXISTS price_history (
                 id          INTEGER PRIMARY KEY AUTOINCREMENT,
                 symbol      TEXT    NOT NULL,
@@ -51,7 +52,8 @@ def init_db() -> None:
                 detail     TEXT,
                 created_at TEXT NOT NULL
             );
-        """)
+        """
+        )
 
 
 def save_price(
@@ -70,8 +72,15 @@ def save_price(
                 (symbol, price, change_val, change_pct, volume, source, fetched_at)
             VALUES (?, ?, ?, ?, ?, ?, ?)
             """,
-            (symbol, price, change, change_pct, volume, source,
-             datetime.now(timezone.utc).isoformat()),
+            (
+                symbol,
+                price,
+                change,
+                change_pct,
+                volume,
+                source,
+                datetime.now(timezone.utc).isoformat(),
+            ),
         )
 
 

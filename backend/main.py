@@ -24,10 +24,10 @@ class JSONFormatter(logging.Formatter):
     def format(self, record: logging.LogRecord) -> str:  # noqa: A003
         payload = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
-            "level":     record.levelname,
-            "logger":    record.name,
-            "message":   record.getMessage(),
-            "service":   "nintendo-stock-api",
+            "level": record.levelname,
+            "logger": record.name,
+            "message": record.getMessage(),
+            "service": "nintendo-stock-api",
         }
         if record.exc_info:
             payload["exception"] = self.formatException(record.exc_info)
@@ -83,17 +83,22 @@ def on_startup() -> None:
 
 # ─── Middleware de observabilidade ────────────────────────────────────────────
 
+
 @app.middleware("http")
 async def observability_middleware(request: Request, call_next):
     correlation_id = str(uuid.uuid4())[:8]
     start = time.perf_counter()
 
-    log.info(json.dumps({
-        "event":          "request_start",
-        "correlation_id": correlation_id,
-        "method":         request.method,
-        "path":           request.url.path,
-    }))
+    log.info(
+        json.dumps(
+            {
+                "event": "request_start",
+                "correlation_id": correlation_id,
+                "method": request.method,
+                "path": request.url.path,
+            }
+        )
+    )
 
     _inc("http_requests_total")
 
@@ -109,14 +114,18 @@ async def observability_middleware(request: Request, call_next):
     _inc("http_request_duration_ms_total", duration_ms)
     _inc(f"http_status_{status}_total")
 
-    log.info(json.dumps({
-        "event":          "request_end",
-        "correlation_id": correlation_id,
-        "method":         request.method,
-        "path":           request.url.path,
-        "status":         status,
-        "duration_ms":    round(duration_ms, 2),
-    }))
+    log.info(
+        json.dumps(
+            {
+                "event": "request_end",
+                "correlation_id": correlation_id,
+                "method": request.method,
+                "path": request.url.path,
+                "status": status,
+                "duration_ms": round(duration_ms, 2),
+            }
+        )
+    )
 
     response.headers["X-Correlation-ID"] = correlation_id
     response.headers["X-Duration-Ms"] = f"{duration_ms:.1f}"
@@ -125,22 +134,27 @@ async def observability_middleware(request: Request, call_next):
 
 # ─── Endpoints ────────────────────────────────────────────────────────────────
 
+
 @app.get("/health", summary="Health check", tags=["Observabilidade"])
 def health() -> dict:
     uptime_s = round(time.time() - _start_time, 1)
     return {
-        "status":         "healthy",
-        "service":        "nintendo-stock-api",
-        "version":        "1.0.0",
+        "status": "healthy",
+        "service": "nintendo-stock-api",
+        "version": "1.0.0",
         "uptime_seconds": uptime_s,
         "requests_total": int(_counters["http_requests_total"]),
-        "errors_total":   int(_counters["http_errors_total"]),
-        "timestamp":      datetime.now(timezone.utc).isoformat(),
+        "errors_total": int(_counters["http_errors_total"]),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
     }
 
 
-@app.get("/metrics", response_class=PlainTextResponse,
-         summary="Métricas Prometheus", tags=["Observabilidade"])
+@app.get(
+    "/metrics",
+    response_class=PlainTextResponse,
+    summary="Métricas Prometheus",
+    tags=["Observabilidade"],
+)
 def prometheus_metrics() -> str:
     req = int(_counters["http_requests_total"])
     err = int(_counters["http_errors_total"])
@@ -194,11 +208,7 @@ def get_stock(symbol: str) -> dict:
         info = ticker.info or {}
         hist = ticker.history(period="1mo")
 
-        price = (
-            info.get("currentPrice")
-            or info.get("regularMarketPrice")
-            or info.get("navPrice")
-        )
+        price = info.get("currentPrice") or info.get("regularMarketPrice") or info.get("navPrice")
 
         if not price:
             raise HTTPException(
@@ -206,11 +216,7 @@ def get_stock(symbol: str) -> dict:
                 detail=f"Símbolo '{sym}' não encontrado ou mercado fechado.",
             )
 
-        prev_close = (
-            info.get("previousClose")
-            or info.get("regularMarketPreviousClose")
-            or price
-        )
+        prev_close = info.get("previousClose") or info.get("regularMarketPreviousClose") or price
 
         change = round(price - prev_close, 2)
         change_pct = round((change / prev_close) * 100, 2) if prev_close else 0.0
@@ -222,26 +228,26 @@ def get_stock(symbol: str) -> dict:
         database.save_price(sym, price, change, change_pct, info.get("volume") or 0)
 
         return {
-            "symbol":        sym,
-            "name":          info.get("longName", sym),
-            "price":         round(price, 2),
-            "change":        change,
+            "symbol": sym,
+            "name": info.get("longName", sym),
+            "price": round(price, 2),
+            "change": change,
             "changePercent": change_pct,
-            "open":          round(info.get("open") or price, 2),
-            "high":          round(info.get("dayHigh") or price, 2),
-            "low":           round(info.get("dayLow") or price, 2),
-            "volume":        info.get("volume") or 0,
-            "avgVolume":     info.get("averageVolume") or 0,
-            "marketCap":     info.get("marketCap") or 0,
-            "pe":            info.get("trailingPE"),
-            "eps":           info.get("trailingEps"),
+            "open": round(info.get("open") or price, 2),
+            "high": round(info.get("dayHigh") or price, 2),
+            "low": round(info.get("dayLow") or price, 2),
+            "volume": info.get("volume") or 0,
+            "avgVolume": info.get("averageVolume") or 0,
+            "marketCap": info.get("marketCap") or 0,
+            "pe": info.get("trailingPE"),
+            "eps": info.get("trailingEps"),
             "dividendYield": round((info.get("dividendYield") or 0) * 100, 2),
-            "week52High":    info.get("fiftyTwoWeekHigh"),
-            "week52Low":     info.get("fiftyTwoWeekLow"),
-            "beta":          info.get("beta"),
-            "history":       history_c,
-            "source":        "live",
-            "fetchedAt":     datetime.now(timezone.utc).isoformat(),
+            "week52High": info.get("fiftyTwoWeekHigh"),
+            "week52Low": info.get("fiftyTwoWeekLow"),
+            "beta": info.get("beta"),
+            "history": history_c,
+            "source": "live",
+            "fetchedAt": datetime.now(timezone.utc).isoformat(),
         }
 
     except HTTPException:
@@ -252,16 +258,15 @@ def get_stock(symbol: str) -> dict:
         raise HTTPException(status_code=500, detail=f"Erro ao buscar dados: {exc}") from exc
 
 
-@app.get("/api/stock/{symbol}/history",
-         summary="Histórico persistido no banco", tags=["Stock"])
+@app.get("/api/stock/{symbol}/history", summary="Histórico persistido no banco", tags=["Stock"])
 def get_stock_history(symbol: str, days: int = 30) -> dict:
     sym = symbol.upper()
     rows = database.get_history(sym, days)
     stats = database.get_stats(sym, days)
     return {
-        "symbol":     sym,
-        "days":       days,
-        "snapshots":  len(rows),
-        "stats":      stats,
-        "data":       rows,
+        "symbol": sym,
+        "days": days,
+        "snapshots": len(rows),
+        "stats": stats,
+        "data": rows,
     }

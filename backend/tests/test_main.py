@@ -8,6 +8,7 @@ from fastapi.testclient import TestClient
 from unittest.mock import MagicMock, patch
 
 import sys, os
+
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), ".."))
 
 from main import app  # noqa: E402
@@ -16,6 +17,7 @@ client = TestClient(app)
 
 
 # ─── /health ─────────────────────────────────────────────────────────────────
+
 
 class TestHealth:
     def test_returns_200(self):
@@ -37,6 +39,7 @@ class TestHealth:
 
 # ─── /metrics ────────────────────────────────────────────────────────────────
 
+
 class TestMetrics:
     def test_returns_200(self):
         assert client.get("/metrics").status_code == 200
@@ -54,27 +57,28 @@ class TestMetrics:
 
 # ─── /api/stock/{symbol} ─────────────────────────────────────────────────────
 
+
 def _mock_ticker(price: float = 13.45, prev_close: float = 13.22):
     """Cria um mock do yfinance.Ticker com dados controlados."""
     import pandas as pd
 
     mock = MagicMock()
     mock.info = {
-        "currentPrice":        price,
-        "previousClose":       prev_close,
-        "open":                prev_close,
-        "dayHigh":             price + 0.20,
-        "dayLow":              price - 0.15,
-        "volume":              1_234_567,
-        "averageVolume":       987_000,
-        "marketCap":           17_800_000_000,
-        "trailingPE":          18.5,
-        "trailingEps":         0.73,
-        "dividendYield":       0.021,
-        "fiftyTwoWeekHigh":    16.89,
-        "fiftyTwoWeekLow":     10.12,
-        "beta":                0.62,
-        "longName":            "Nintendo Co., Ltd.",
+        "currentPrice": price,
+        "previousClose": prev_close,
+        "open": prev_close,
+        "dayHigh": price + 0.20,
+        "dayLow": price - 0.15,
+        "volume": 1_234_567,
+        "averageVolume": 987_000,
+        "marketCap": 17_800_000_000,
+        "trailingPE": 18.5,
+        "trailingEps": 0.73,
+        "dividendYield": 0.021,
+        "fiftyTwoWeekHigh": 16.89,
+        "fiftyTwoWeekLow": 10.12,
+        "beta": 0.62,
+        "longName": "Nintendo Co., Ltd.",
     }
     closes = [11.0 + i * 0.08 for i in range(30)]
     mock.history.return_value = pd.DataFrame({"Close": closes})
@@ -93,9 +97,19 @@ class TestStockEndpoint:
         mock_yf.return_value = _mock_ticker()
         data = client.get("/api/stock/NTDOY").json()
         for field in (
-            "symbol", "price", "change", "changePercent",
-            "open", "high", "low", "volume", "history",
-            "week52High", "week52Low", "source", "fetchedAt",
+            "symbol",
+            "price",
+            "change",
+            "changePercent",
+            "open",
+            "high",
+            "low",
+            "volume",
+            "history",
+            "week52High",
+            "week52Low",
+            "source",
+            "fetchedAt",
         ):
             assert field in data, f"Campo ausente: {field}"
 
@@ -126,6 +140,7 @@ class TestStockEndpoint:
     @patch("main.yf.Ticker")
     def test_empty_info_returns_404(self, mock_yf):
         import pandas as pd
+
         m = MagicMock()
         m.info = {}
         m.history.return_value = pd.DataFrame({"Close": []})
@@ -139,6 +154,7 @@ class TestStockEndpoint:
 
 
 # ─── Headers de observabilidade ──────────────────────────────────────────────
+
 
 class TestObservabilityHeaders:
     def test_health_has_correlation_id(self):
