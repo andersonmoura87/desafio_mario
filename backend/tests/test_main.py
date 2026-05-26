@@ -87,14 +87,16 @@ def _mock_ticker(price: float = 13.45, prev_close: float = 13.22):
 
 
 class TestStockEndpoint:
+    @patch("main.database.save_price")
     @patch("main.yf.Ticker")
-    def test_valid_symbol_returns_200(self, mock_yf):
+    def test_valid_symbol_returns_200(self, mock_yf, mock_save):
         mock_yf.return_value = _mock_ticker()
         resp = client.get("/api/stock/NTDOY")
         assert resp.status_code == 200
 
+    @patch("main.database.save_price")
     @patch("main.yf.Ticker")
-    def test_response_has_required_fields(self, mock_yf):
+    def test_response_has_required_fields(self, mock_yf, mock_save):
         mock_yf.return_value = _mock_ticker()
         data = client.get("/api/stock/NTDOY").json()
         for field in (
@@ -114,27 +116,31 @@ class TestStockEndpoint:
         ):
             assert field in data, f"Campo ausente: {field}"
 
+    @patch("main.database.save_price")
     @patch("main.yf.Ticker")
-    def test_symbol_is_uppercased(self, mock_yf):
+    def test_symbol_is_uppercased(self, mock_yf, mock_save):
         mock_yf.return_value = _mock_ticker()
         data = client.get("/api/stock/ntdoy").json()
         assert data["symbol"] == "NTDOY"
 
+    @patch("main.database.save_price")
     @patch("main.yf.Ticker")
-    def test_change_is_calculated_correctly(self, mock_yf):
+    def test_change_is_calculated_correctly(self, mock_yf, mock_save):
         mock_yf.return_value = _mock_ticker(price=13.45, prev_close=13.22)
         data = client.get("/api/stock/NTDOY").json()
         assert abs(data["change"] - 0.23) < 0.01
         assert abs(data["changePercent"] - 1.74) < 0.05
 
+    @patch("main.database.save_price")
     @patch("main.yf.Ticker")
-    def test_history_has_up_to_30_entries(self, mock_yf):
+    def test_history_has_up_to_30_entries(self, mock_yf, mock_save):
         mock_yf.return_value = _mock_ticker()
         data = client.get("/api/stock/NTDOY").json()
         assert 1 <= len(data["history"]) <= 30
 
+    @patch("main.database.save_price")
     @patch("main.yf.Ticker")
-    def test_source_is_live(self, mock_yf):
+    def test_source_is_live(self, mock_yf, mock_save):
         mock_yf.return_value = _mock_ticker()
         assert client.get("/api/stock/NTDOY").json()["source"] == "live"
 
