@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 28" shape-rendering="crispEdges">
+
+  <!-- PPP NUVEM PIXEL ART ESTILO NES PPP -->
+  <!-- As nuvens do Mario têm base retangular e topo com 3 "morros" -->
+
+  <!-- topo do morro central (maior) -->
+  <rect x="24" y="0"  width="16" height="2" fill="#FFFFFF"/>
+  <!-- alarga morro central -->
+  <rect x="20" y="2"  width="24" height="2" fill="#FFFFFF"/>
+  <!-- morro central pleno + começa morros laterais -->
+  <rect x="8"  y="4"  width="8"  height="2" fill="#FFFFFF"/>  <!-- morro esq topo -->
+  <rect x="18" y="4"  width="28" height="2" fill="#FFFFFF"/>  <!-- morro central -->
+  <rect x="50" y="4"  width="6"  height="2" fill="#FFFFFF"/>  <!-- morro dir topo -->
+
+  <!-- funde tudo numa base larga -->
+  <rect x="4"  y="6"  width="56" height="2" fill="#FFFFFF"/>
+  <rect x="2"  y="8"  width="60" height="2" fill="#FFFFFF"/>
+
+  <!-- corpo principal da nuvem (2 linhas altas) -->
+  <rect x="0"  y="10" width="64" height="6" fill="#FFFFFF"/>
+
+  <!-- base da nuvem com sombra levemente acinzentada -->
+  <rect x="2"  y="16" width="60" height="2" fill="#DDDDEE"/>
+  <rect x="4"  y="18" width="56" height="2" fill="#CCCCDD"/>
+
+  <!-- sombra interna (linhas cinza claras que dão profundidade) -->
+  <rect x="4"  y="12" width="56" height="2" fill="#EEEEFF"/>
+
+</svg>

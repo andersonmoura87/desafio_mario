@@ -1,0 +1,152 @@
+name: 🎮 Nintendo Stock Quest — CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+env:
+  PYTHON_VERSION: "3.11"
+  IMAGE_NAME: nintendo-stock-api
+
+jobs:
+  # ─── 1. Lint ──────────────────────────────────────────────────────────────
+  lint:
+    name: 🔍 Lint & Formatação
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Instalar ferramentas de lint
+        run: pip install flake8 black isort
+
+      - name: flake8 (estilo PEP 8)
+        run: flake8 backend/ --max-line-length=100 --exclude=backend/tests/
+
+      - name: black (formatação)
+        run: black --check --line-length=100 backend/
+
+      - name: isort (ordenação de imports)
+        run: isort --check-only backend/
+
+  # ─── 2. Testes ────────────────────────────────────────────────────────────
+  test:
+    name: 🧪 Testes
+    runs-on: ubuntu-latest
+    needs: lint
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+          cache-dependency-path: backend/requirements.txt
+
+      - name: Instalar dependências
+        run: pip install -r backend/requirements.txt pytest pytest-cov httpx
+
+      - name: Executar testes com cobertura
+        run: |
+          cd backend
+          pytest tests/ -v --tb=short \
+            --cov=. \
+            --cov-report=term-missing \
+            --cov-report=xml:coverage.xml \
+            --cov-fail-under=80
+
+      - name: Upload relatório de cobertura
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-report
+          path: backend/coverage.xml
+
+  # ─── 3. Build Docker ──────────────────────────────────────────────────────
+  docker:
+    name: 🐳 Docker Build & Health Check
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build da imagem
+        run: docker build -t ${{ env.IMAGE_NAME }}:${{ github.sha }} ./backend
+
+      - name: Subir container
+        run: |
+          docker run -d \
+            --name api \
+            -p 8000:8000 \
+            ${{ env.IMAGE_NAME }}:${{ github.sha }}
+
+      - name: Aguardar inicialização (health check)
+        run: |
+          echo "Aguardando API..."
+          for i in $(seq 1 15); do
+            if curl -sf http://localhost:8000/health > /dev/null; then
+              echo "✅ API saudável!"
+              break
+            fi
+            echo "Tentativa $i/15..."
+            sleep 2
+          done
+
+      - name: Validar /health
+        run: |
+          RESP=$(curl -sf http://localhost:8000/health)
+          echo "$RESP" | python3 -c "
+          import sys, json
+          d = json.load(sys.stdin)
+          assert d['status'] == 'healthy', f'Status inesperado: {d}'
+          print('✅ /health OK:', d['status'])
+          "
+
+      - name: Validar /metrics (formato Prometheus)
+        run: |
+          METRICS=$(curl -sf http://localhost:8000/metrics)
+          echo "$METRICS" | grep -q "http_requests_total" \
+            && echo "✅ /metrics OK" \
+            || (echo "❌ /metrics inválido" && exit 1)
+
+      - name: Logs do container (diagnóstico)
+        if: failure()
+        run: docker logs api
+
+      - name: Tag como latest (apenas na main)
+        if: github.ref == 'refs/heads/main'
+        run: |
+          docker tag \
+            ${{ env.IMAGE_NAME }}:${{ github.sha }} \
+            ${{ env.IMAGE_NAME }}:latest
+          echo "✅ Imagem tagueada como latest"
+
+  # ─── 4. Resumo final ──────────────────────────────────────────────────────
+  summary:
+    name: 📊 Resumo do Pipeline
+    runs-on: ubuntu-latest
+    needs: [lint, test, docker]
+    if: always()
+
+    steps:
+      - name: Status dos jobs
+        run: |
+          echo "Pipeline concluído"
+          echo "  Lint:   ${{ needs.lint.result }}"
+          echo "  Tests:  ${{ needs.test.result }}"
+          echo "  Docker: ${{ needs.docker.result }}"

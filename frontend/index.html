@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nintendo Stock Quest</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- HUD fixo no topo, estilo HUD do Mario -->
+  <div class="hud">
+    <div class="hud-item">
+      <div class="hud-label">NTDOY</div>
+      <div class="hud-value" id="hud-price">$13.45</div>
+    </div>
+    <div class="hud-item">
+      <div class="hud-label">MOEDAS</div>
+      <div class="hud-value">×<span id="hud-coins">00</span></div>
+    </div>
+    <div class="hud-item">
+      <div class="hud-label">MUNDO</div>
+      <div class="hud-value">NYSE</div>
+    </div>
+    <div class="hud-item">
+      <div class="hud-label">TEMPO</div>
+      <div class="hud-value" id="hud-time">400</div>
+    </div>
+  </div>
+
+  <!-- Céu animado com nuvens -->
+  <div class="sky-bg">
+    <div class="cloud-float" style="top:90px; animation-duration:22s; animation-delay:0s">
+      <img src="imagens/cloud.svg" width="130" alt="">
+    </div>
+    <div class="cloud-float" style="top:150px; animation-duration:30s; animation-delay:-10s">
+      <img src="imagens/cloud.svg" width="170" alt="">
+    </div>
+    <div class="cloud-float" style="top:65px; animation-duration:18s; animation-delay:-5s">
+      <img src="imagens/cloud.svg" width="90" alt="">
+    </div>
+  </div>
+
+  <!-- Conteúdo principal -->
+  <main class="container">
+
+    <h1 class="game-title">
+      NINTENDO<br>
+      <span class="title-sub">STOCK QUEST</span>
+    </h1>
+
+    <div class="ticker-info">
+      <span class="ticker-sym">NTDOY</span>
+      <span class="ticker-exch">NYSE · OTC · Tokyo: 7974</span>
+    </div>
+
+    <div class="live-badge" id="live-badge">● DADOS AO VIVO</div>
+
+    <!-- Cotação Atual -->
+    <section class="card">
+      <div class="card-title">
+        <span class="pixel-coin" aria-hidden="true"></span>
+        COTAÇÃO ATUAL
+      </div>
+      <div class="price-main-row">
+        <div class="price-big" id="price-display">$13.45</div>
+        <div class="price-change positive" id="price-change">▲ +$0.23 (+1.74%)</div>
+      </div>
+      <div class="price-stats-grid">
+        <div class="pstat">
+          <span class="pstat-l">ABERTURA</span>
+          <span class="pstat-v" id="s-open">$13.22</span>
+        </div>
+        <div class="pstat">
+          <span class="pstat-l">MÁXIMA DO DIA</span>
+          <span class="pstat-v" id="s-high">$13.58</span>
+        </div>
+        <div class="pstat">
+          <span class="pstat-l">MÍNIMA DO DIA</span>
+          <span class="pstat-v" id="s-low">$13.18</span>
+        </div>
+        <div class="pstat">
+          <span class="pstat-l">VOLUME</span>
+          <span class="pstat-v" id="s-volume">1.23M</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Jornada 52 Semanas -->
+    <section class="card">
+      <div class="card-title">★ JORNADA 52 SEMANAS ★</div>
+      <div class="range-labels">
+        <span id="r-low">MIN $10.12</span>
+        <span id="r-high">MAX $16.89</span>
+      </div>
+      <div class="mario-progress-wrap">
+        <div class="mario-progress" id="mario-progress">
+          <div class="mario-fill" id="mario-fill"></div>
+          <div class="mario-runner" id="mario-runner">
+            <img src="imagens/mario.svg" alt="Mario">
+          </div>
+        </div>
+      </div>
+      <div class="range-pos-text">
+        POSIÇÃO: <span id="range-pct">52</span>% DA JORNADA ANUAL
+      </div>
+    </section>
+
+    <!-- Blocos de Poder -->
+    <section class="card">
+      <div class="card-title">BLOCOS DE PODER</div>
+      <p class="blocks-hint">↑ Clique nos blocos para revelar os segredos!</p>
+      <div class="blocks-row">
+        <div class="qblock" onclick="hitBlock(this,'P/L','18.5x','Preço sobre Lucro')">
+          <span class="qblock-q">?</span>
+          <div class="qblock-reveal">
+            <div class="qb-l">P/L</div>
+            <div class="qb-v" id="m-pe">18.5x</div>
+          </div>
+        </div>
+        <div class="qblock" onclick="hitBlock(this,'LPA','$0.73','Lucro por Ação')">
+          <span class="qblock-q">?</span>
+          <div class="qblock-reveal">
+            <div class="qb-l">LPA</div>
+            <div class="qb-v" id="m-eps">$0.73</div>
+          </div>
+        </div>
+        <div class="qblock" onclick="hitBlock(this,'VOL','987K','Volume Médio Diário')">
+          <span class="qblock-q">?</span>
+          <div class="qblock-reveal">
+            <div class="qb-l">VOL</div>
+            <div class="qb-v" id="m-vol">987K</div>
+          </div>
+        </div>
+        <div class="qblock" onclick="hitBlock(this,'DIV','2.1%','Dividend Yield Anual')">
+          <span class="qblock-q">?</span>
+          <div class="qblock-reveal">
+            <div class="qb-l">DIV</div>
+            <div class="qb-v" id="m-div">2.1%</div>
+          </div>
+        </div>
+        <div class="qblock" onclick="hitBlock(this,'CAP','$17.8B','Capitalização de Mercado')">
+          <span class="qblock-q">?</span>
+          <div class="qblock-reveal">
+            <div class="qb-l">CAP</div>
+            <div class="qb-v" id="m-cap">$17.8B</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Gráfico Histórico -->
+    <section class="card">
+      <div class="card-title">MAPA DO TESOURO — HISTÓRICO 30 DIAS</div>
+      <div class="chart-area">
+        <canvas id="stock-chart" height="160"></canvas>
+      </div>
+    </section>
+
+    <!-- Análise / Sinal -->
+    <section class="card">
+      <div class="card-title">ANÁLISE DO REINO MUSHROOM</div>
+      <div class="signal-row">
+        <div class="signal-badge HOLD" id="signal-badge">HOLD</div>
+        <div class="signal-desc" id="signal-desc">O Mario está avaliando o território...</div>
+      </div>
+      <div class="indicators">
+        <div class="ind">
+          <span class="ind-l">RSI (14)</span>
+          <span class="ind-v" id="ind-rsi">54</span>
+        </div>
+        <div class="ind">
+          <span class="ind-l">MÉD. 30 DIAS</span>
+          <span class="ind-v" id="ind-ma">$12.87</span>
+        </div>
+        <div class="ind">
+          <span class="ind-l">VS MÉDIA</span>
+          <span class="ind-v" id="ind-vs">+4.5%</span>
+        </div>
+        <div class="ind">
+          <span class="ind-l">BETA</span>
+          <span class="ind-v">0.62</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Conquista -->
+    <div class="ach-popup" id="ach-popup">
+      <span class="ach-star">★</span>
+      <div class="ach-title">CONQUISTA DESBLOQUEADA!</div>
+      <div class="ach-text" id="ach-text"></div>
+    </div>
+
+    <!-- Atualizar -->
+    <div class="refresh-wrap">
+      <button class="btn" onclick="refreshData()">▶ ATUALIZAR DADOS</button>
+      <div class="upd-time">Atualizado: <span id="upd-time">--:--:--</span></div>
+      <div class="data-note">* Dados simulados para fins educacionais</div>
+    </div>
+
+  </main>
+
+  <!-- Cena de rodapé estilo Mario -->
+  <div class="game-scene">
+    <div class="gs-hill h1"></div>
+    <div class="gs-hill h2"></div>
+    <img src="imagens/pipe.svg" class="gs-pipe" alt="">
+    <img src="imagens/mario.svg" class="gs-mario" alt="Mario">
+    <img src="imagens/goomba.svg" class="gs-goomba" alt="Goomba">
+    <div class="gs-ground"></div>
+  </div>
+
+  <footer class="page-footer">
+    © 2025 Nintendo Stock Quest · Desenvolvido com ♥ e muita nostalgia
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

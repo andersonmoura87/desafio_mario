@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 28" shape-rendering="crispEdges">
+
+  <!-- PPP CABEÇA ARREDONDADA PPP -->
+  <!-- topo estreito -->
+  <rect x="8"  y="0"  width="16" height="2" fill="#8B4513"/>
+  <!-- head alargando -->
+  <rect x="4"  y="2"  width="24" height="2" fill="#8B4513"/>
+  <rect x="2"  y="4"  width="28" height="2" fill="#8B4513"/>
+  <!-- head pleno (2 linhas) -->
+  <rect x="0"  y="6"  width="32" height="4" fill="#8B4513"/>
+
+  <!-- PPP SOBRANCELHAS RAIVOSAS PPP -->
+  <!-- linha 1 das sobrancelhas: parte externa (mais alta) -->
+  <rect x="0"  y="10" width="6"  height="2" fill="#8B4513"/>
+  <rect x="6"  y="10" width="2"  height="2" fill="#1B1B1B"/>  <!-- sobrancelha esq (parte externa) -->
+  <rect x="8"  y="10" width="16" height="2" fill="#D4895C"/>  <!-- rosto -->
+  <rect x="24" y="10" width="2"  height="2" fill="#1B1B1B"/>  <!-- sobrancelha dir (parte externa) -->
+  <rect x="26" y="10" width="6"  height="2" fill="#8B4513"/>
+
+  <!-- linha 2 das sobrancelhas: parte interna (mais baixa, em direção ao centro) -->
+  <rect x="0"  y="12" width="4"  height="2" fill="#8B4513"/>
+  <rect x="4"  y="12" width="4"  height="2" fill="#D4895C"/>  <!-- rosto -->
+  <rect x="8"  y="12" width="4"  height="2" fill="#1B1B1B"/>  <!-- sobrancelha esq (parte interna) -->
+  <rect x="12" y="12" width="8"  height="2" fill="#D4895C"/>  <!-- rosto centro -->
+  <rect x="20" y="12" width="4"  height="2" fill="#1B1B1B"/>  <!-- sobrancelha dir (parte interna) -->
+  <rect x="24" y="12" width="4"  height="2" fill="#D4895C"/>  <!-- rosto -->
+  <rect x="28" y="12" width="4"  height="2" fill="#8B4513"/>
+
+  <!-- PPP OLHOS (linha superior  brancos) PPP -->
+  <rect x="0"  y="14" width="4"  height="2" fill="#8B4513"/>
+  <rect x="4"  y="14" width="4"  height="2" fill="#D4895C"/>
+  <rect x="8"  y="14" width="4"  height="2" fill="#FFFFFF"/>  <!-- olho esq (branco) -->
+  <rect x="12" y="14" width="8"  height="2" fill="#D4895C"/>
+  <rect x="20" y="14" width="4"  height="2" fill="#FFFFFF"/>  <!-- olho dir (branco) -->
+  <rect x="24" y="14" width="4"  height="2" fill="#D4895C"/>
+  <rect x="28" y="14" width="4"  height="2" fill="#8B4513"/>
+
+  <!-- PPP OLHOS (linha da pupila) PPP -->
+  <rect x="0"  y="16" width="4"  height="2" fill="#8B4513"/>
+  <rect x="4"  y="16" width="4"  height="2" fill="#D4895C"/>
+  <rect x="8"  y="16" width="2"  height="2" fill="#FFFFFF"/>  <!-- esclera esq -->
+  <rect x="10" y="16" width="2"  height="2" fill="#1B1B1B"/>  <!-- pupila esq -->
+  <rect x="12" y="16" width="8"  height="2" fill="#D4895C"/>
+  <rect x="20" y="16" width="2"  height="2" fill="#1B1B1B"/>  <!-- pupila dir -->
+  <rect x="22" y="16" width="2"  height="2" fill="#FFFFFF"/>  <!-- esclera dir -->
+  <rect x="24" y="16" width="4"  height="2" fill="#D4895C"/>
+  <rect x="28" y="16" width="4"  height="2" fill="#8B4513"/>
+
+  <!-- PPP PARTE INFERIOR DO ROSTO PPP -->
+  <rect x="0"  y="18" width="4"  height="2" fill="#8B4513"/>
+  <rect x="4"  y="18" width="24" height="2" fill="#D4895C"/>
+  <rect x="28" y="18" width="4"  height="2" fill="#8B4513"/>
+
+  <!-- PPP CORPO PPP -->
+  <rect x="4"  y="20" width="24" height="2" fill="#8B4513"/>
+  <rect x="6"  y="22" width="20" height="2" fill="#8B4513"/>
+
+  <!-- PPP PÉS / SAPATOS (pretos, achatados) PPP -->
+  <rect x="2"  y="24" width="10" height="4" fill="#1B1B1B"/>  <!-- pé esquerdo -->
+  <rect x="18" y="24" width="10" height="4" fill="#1B1B1B"/>  <!-- pé direito -->
+
+</svg>

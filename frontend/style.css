@@ -1,0 +1,568 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+/* ─── Variáveis ─────────────────────────────────────────────── */
+:root {
+  --sky:       #5c94fc;
+  --sky-dark:  #1a4b8c;
+  --gold:      #ffd700;
+  --gold-dark: #b8860b;
+  --brown:     #8b4513;
+  --red:       #e74c3c;
+  --green:     #27ae60;
+  --white:     #ffffff;
+  --black:     #000000;
+  --card-bg:   rgba(0, 0, 50, 0.84);
+}
+
+/* ─── Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html { scroll-behavior: smooth; }
+
+/* ─── Body ──────────────────────────────────────────────────── */
+body {
+  font-family: 'Press Start 2P', cursive;
+  background-color: var(--sky);
+  color: var(--white);
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 20px;
+}
+
+/* ─── HUD ───────────────────────────────────────────────────── */
+.hud {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.92);
+  border-bottom: 3px solid var(--gold);
+  padding: 8px 16px;
+  z-index: 999;
+}
+
+.hud-item   { text-align: center; }
+.hud-label  { display: block; font-size: 7px; color: var(--gold); margin-bottom: 3px; }
+.hud-value  { display: block; font-size: 13px; color: var(--white); }
+
+/* ─── Céu / Nuvens ──────────────────────────────────────────── */
+.sky-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, #5c94fc 0%, #7ab0ff 55%, #9fcfff 100%);
+  overflow: hidden;
+}
+
+@keyframes float-cloud {
+  from { transform: translateX(-220px); }
+  to   { transform: translateX(110vw);  }
+}
+
+.cloud-float {
+  position: absolute;
+  left: 0;
+  animation: float-cloud linear infinite;
+}
+
+.cloud-float img {
+  image-rendering: pixelated;
+  filter: brightness(1.05);
+}
+
+/* ─── Container ─────────────────────────────────────────────── */
+.container {
+  max-width: 640px;
+  margin: 72px auto 0;
+  padding: 0 16px 20px;
+}
+
+/* ─── Título ────────────────────────────────────────────────── */
+.game-title {
+  text-align: center;
+  font-size: 26px;
+  color: var(--gold);
+  text-shadow: 3px 3px 0 #000, -1px -1px 0 #000;
+  line-height: 1.6;
+  margin: 20px 0 8px;
+}
+
+.title-sub {
+  font-size: 13px;
+  color: var(--white);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.ticker-info {
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+.ticker-sym {
+  background: var(--gold);
+  color: #000;
+  padding: 4px 10px;
+  font-size: 9px;
+  border-radius: 4px;
+  margin-right: 8px;
+  border: 2px solid #000;
+}
+
+.ticker-exch {
+  font-size: 8px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.live-badge {
+  text-align: center;
+  font-size: 8px;
+  color: #27ae60;
+  margin-bottom: 16px;
+  animation: blink 1.2s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+
+/* ─── Cards ─────────────────────────────────────────────────── */
+.card {
+  background: var(--card-bg);
+  border: 4px solid var(--gold);
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 5px 5px 0 #000;
+  backdrop-filter: blur(6px);
+}
+
+.card-title {
+  font-size: 9px;
+  color: var(--gold);
+  letter-spacing: 1px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Moeda pixelada girando */
+.pixel-coin {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background: var(--gold);
+  border-radius: 50%;
+  border: 2px solid #000;
+  box-shadow: inset 2px 2px 0 rgba(255,255,255,0.4),
+              inset -2px -2px 0 rgba(0,0,0,0.3);
+  flex-shrink: 0;
+  animation: coin-spin 1.8s linear infinite;
+}
+
+@keyframes coin-spin {
+  0%  { transform: scaleX(1); }
+  20% { transform: scaleX(0.15); }
+  40% { transform: scaleX(1); }
+  60% { transform: scaleX(0.15); }
+  80% { transform: scaleX(1); }
+}
+
+/* ─── Seção de Preço ─────────────────────────────────────────── */
+.price-main-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.price-big {
+  font-size: 30px;
+  color: var(--gold);
+  text-shadow: 3px 3px 0 #000;
+}
+
+.price-change {
+  font-size: 9px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 2px solid;
+  line-height: 1.7;
+}
+
+.price-change.positive {
+  color: var(--green);
+  border-color: var(--green);
+  background: rgba(39, 174, 96, 0.15);
+}
+
+.price-change.negative {
+  color: var(--red);
+  border-color: var(--red);
+  background: rgba(231, 76, 60, 0.15);
+}
+
+.price-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.pstat {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+.pstat-l { font-size: 6px; color: rgba(255, 255, 255, 0.55); }
+.pstat-v { font-size: 11px; color: var(--white); }
+
+/* ─── Barra de progresso (Jornada 52 semanas) ───────────────── */
+.range-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.75);
+  margin-bottom: 8px;
+}
+
+.mario-progress-wrap { position: relative; margin-bottom: 6px; }
+
+.mario-progress {
+  height: 42px;
+  background: var(--brown);
+  border: 3px solid #000;
+  border-radius: 6px;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 0 0 3px var(--gold), inset 0 2px 0 rgba(255, 255, 255, 0.1);
+}
+
+.mario-fill {
+  height: 100%;
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(255,255,255,0.12) 0px, rgba(255,255,255,0.12) 8px,
+    transparent 8px, transparent 16px
+  );
+  background-color: #e74c3c;
+  transition: width 0.7s cubic-bezier(.4, 2, .6, 1);
+  border-radius: 3px 0 0 3px;
+}
+
+.mario-runner {
+  position: absolute;
+  top: -10px;
+  width: 42px;
+  height: 56px;
+  transition: left 0.7s cubic-bezier(.4, 2, .6, 1);
+  z-index: 5;
+}
+
+.mario-runner img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.range-pos-text {
+  text-align: center;
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 10px;
+}
+
+/* ─── Blocos ? ──────────────────────────────────────────────── */
+.blocks-hint {
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.55);
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.blocks-row {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.qblock {
+  width: 70px;
+  height: 70px;
+  background: #c8a000;
+  border: 4px solid #000;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  box-shadow: inset -4px -6px 0 #7a5f00, inset 4px 4px 0 #ffe066;
+  user-select: none;
+  transition: filter 0.15s;
+}
+
+.qblock:hover:not(.hit) { filter: brightness(1.18); }
+
+.qblock-q {
+  font-size: 24px;
+  color: var(--white);
+  text-shadow: 2px 2px 0 #000;
+}
+
+.qblock.hit {
+  background: #7a5c00;
+  box-shadow: inset -4px -6px 0 #4a3800, inset 4px 4px 0 #9a7a00;
+  cursor: default;
+}
+
+.qblock-reveal {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.qb-l { font-size: 6px; color: var(--gold); margin-bottom: 5px; }
+.qb-v { font-size: 10px; color: var(--white); text-shadow: 1px 1px 0 #000; }
+
+@keyframes block-bump {
+  0%   { transform: translateY(0); }
+  25%  { transform: translateY(-16px); }
+  55%  { transform: translateY(0); }
+  75%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.qblock.bumping { animation: block-bump 0.38s ease; }
+
+/* Moeda voando */
+.flying-coin {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background: var(--gold);
+  border: 2px solid #000;
+  border-radius: 50%;
+  z-index: 9999;
+  pointer-events: none;
+  animation: coin-fly 0.75s ease-out forwards;
+}
+
+@keyframes coin-fly {
+  0%   { transform: translateY(0) scale(1);    opacity: 1; }
+  55%  { transform: translateY(-90px) scale(1.1); opacity: 1; }
+  100% { transform: translateY(-130px) scale(0.4); opacity: 0; }
+}
+
+/* ─── Gráfico ───────────────────────────────────────────────── */
+.chart-area {
+  width: 100%;
+  overflow-x: auto;
+}
+
+#stock-chart {
+  display: block;
+  width: 100%;
+  image-rendering: pixelated;
+}
+
+/* ─── Sinal de Análise ──────────────────────────────────────── */
+.signal-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+  flex-wrap: wrap;
+}
+
+.signal-badge {
+  font-size: 14px;
+  padding: 8px 16px;
+  border: 4px solid;
+  border-radius: 4px;
+  flex-shrink: 0;
+  box-shadow: 3px 3px 0 #000;
+}
+
+.signal-badge.BUY  { color: #000; background: var(--green); border-color: #1a7a40; }
+.signal-badge.SELL { color: #fff; background: var(--red);   border-color: #9b2218; }
+.signal-badge.HOLD { color: #000; background: var(--gold);  border-color: var(--gold-dark); }
+
+.signal-desc {
+  font-size: 8px;
+  line-height: 2;
+  color: rgba(255, 255, 255, 0.85);
+  flex: 1;
+  min-width: 160px;
+}
+
+.indicators {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.ind {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+.ind-l { font-size: 6px; color: rgba(255, 255, 255, 0.5); }
+.ind-v { font-size: 11px; }
+
+/* ─── Conquista ─────────────────────────────────────────────── */
+.ach-popup {
+  display: none;
+  background: #120040;
+  border: 4px solid var(--gold);
+  border-radius: 8px;
+  padding: 18px;
+  text-align: center;
+  margin-bottom: 16px;
+  box-shadow: 5px 5px 0 #000;
+  animation: ach-glow 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes ach-glow {
+  from { box-shadow: 5px 5px 0 #000, 0 0 10px var(--gold); }
+  to   { box-shadow: 5px 5px 0 #000, 0 0 30px var(--gold), 0 0 50px rgba(255,215,0,0.3); }
+}
+
+.ach-star  { font-size: 30px; color: var(--gold); display: block; margin-bottom: 8px; }
+.ach-title { font-size: 11px; color: var(--gold); margin-bottom: 10px; }
+.ach-text  { font-size: 8px; color: rgba(255, 255, 255, 0.85); line-height: 2; }
+
+/* ─── Atualizar ─────────────────────────────────────────────── */
+.refresh-wrap { text-align: center; margin-top: 4px; }
+
+.btn {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 12px;
+  background: var(--gold);
+  color: #000;
+  border: 4px solid #000;
+  border-radius: 6px;
+  padding: 12px 28px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #000;
+  transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.btn:hover  { filter: brightness(1.12); }
+.btn:active { transform: translate(3px, 3px); box-shadow: 1px 1px 0 #000; }
+
+.upd-time  { font-size: 7px; color: rgba(255, 255, 255, 0.45); margin-top: 10px; }
+.data-note { font-size: 6px; color: rgba(255, 255, 255, 0.3);  margin-top: 6px; }
+
+/* ─── Cena de rodapé ────────────────────────────────────────── */
+.game-scene {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.gs-hill {
+  position: absolute;
+  bottom: 50px;
+  border-radius: 50% 50% 0 0;
+  border: 3px solid #000;
+  background: #32cd32;
+}
+
+.gs-hill.h1 { width: 130px; height: 90px; left: 30px; }
+.gs-hill.h2 { width:  90px; height: 60px; right: 90px; }
+
+.gs-ground {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 50px;
+  background: var(--brown);
+  border-top: 4px solid #000;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(0,0,0,0.12) 0px,  rgba(0,0,0,0.12) 2px,
+    transparent 2px, transparent 50px
+  );
+}
+
+.gs-pipe {
+  position: absolute;
+  bottom: 50px; right: 70px;
+  height: 72px; width: 50px;
+  object-fit: contain;
+  image-rendering: pixelated;
+}
+
+.gs-mario {
+  position: absolute;
+  bottom: 50px; left: 0;
+  height: 58px; width: 50px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  animation: mario-walk 14s linear infinite;
+}
+
+.gs-goomba {
+  position: absolute;
+  bottom: 50px;
+  left: calc(100% + 60px);
+  height: 42px; width: 42px;
+  object-fit: contain;
+  image-rendering: pixelated;
+  transform: scaleX(-1);
+  animation: goomba-walk 10s linear infinite;
+}
+
+@keyframes mario-walk {
+  from { left: -60px; }
+  to   { left: calc(100% + 60px); }
+}
+
+@keyframes goomba-walk {
+  from { left: calc(100% + 60px); }
+  to   { left: -60px; }
+}
+
+/* ─── Footer ────────────────────────────────────────────────── */
+.page-footer {
+  text-align: center;
+  font-size: 7px;
+  color: rgba(255, 255, 255, 0.45);
+  padding: 14px 16px;
+  background: rgba(0, 0, 0, 0.65);
+  border-top: 2px solid rgba(255, 215, 0, 0.25);
+}
+
+/* ─── Responsivo ────────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .game-title  { font-size: 19px; }
+  .price-big   { font-size: 22px; }
+  .hud-value   { font-size: 10px; }
+  .qblock      { width: 56px; height: 56px; }
+  .qblock-q    { font-size: 19px; }
+  .signal-badge { font-size: 12px; }
+  .blocks-row  { gap: 6px; }
+}

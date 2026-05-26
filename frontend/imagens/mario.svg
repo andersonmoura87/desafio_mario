@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" shape-rendering="crispEdges">
+
+  <!-- PPP CHAPÉU PPP -->
+  <!-- linha do topo (estreita) -->
+  <rect x="8"  y="0"  width="10" height="2" fill="#CC0000"/>
+  <!-- aba do chapéu (larga) -->
+  <rect x="6"  y="2"  width="16" height="2" fill="#CC0000"/>
+
+  <!-- PPP CABELO / TRANSIÇÃO CHAPÉU-ROSTO PPP -->
+  <!-- cabelo esquerdo | pele | cabelo direito -->
+  <rect x="6"  y="4"  width="6"  height="2" fill="#6B3A2A"/>
+  <rect x="12" y="4"  width="4"  height="2" fill="#FC9838"/>
+  <rect x="16" y="4"  width="6"  height="2" fill="#6B3A2A"/>
+
+  <!-- PPP ROSTO  linha dos olhos PPP -->
+  <rect x="4"  y="6"  width="2"  height="2" fill="#6B3A2A"/>  <!-- contorno esq -->
+  <rect x="6"  y="6"  width="2"  height="2" fill="#FC9838"/>  <!-- pele -->
+  <rect x="8"  y="6"  width="2"  height="2" fill="#6B3A2A"/>  <!-- olho esq -->
+  <rect x="10" y="6"  width="8"  height="2" fill="#FC9838"/>  <!-- pele entre olhos -->
+  <rect x="18" y="6"  width="2"  height="2" fill="#6B3A2A"/>  <!-- olho dir -->
+  <rect x="20" y="6"  width="2"  height="2" fill="#FC9838"/>  <!-- pele -->
+  <rect x="22" y="6"  width="2"  height="2" fill="#6B3A2A"/>  <!-- contorno dir -->
+
+  <!-- PPP ROSTO  linha do nariz PPP -->
+  <rect x="4"  y="8"  width="4"  height="2" fill="#6B3A2A"/>  <!-- sobrancelha esq -->
+  <rect x="8"  y="8"  width="6"  height="2" fill="#FC9838"/>  <!-- pele -->
+  <rect x="14" y="8"  width="2"  height="2" fill="#6B3A2A"/>  <!-- nariz -->
+  <rect x="16" y="8"  width="4"  height="2" fill="#FC9838"/>  <!-- pele -->
+  <rect x="20" y="8"  width="4"  height="2" fill="#6B3A2A"/>  <!-- sobrancelha dir -->
+
+  <!-- PPP BIGODE PPP -->
+  <!-- linha 1 do bigode: pele nas laterais, marrom no centro -->
+  <rect x="6"  y="10" width="4"  height="2" fill="#FC9838"/>
+  <rect x="10" y="10" width="8"  height="2" fill="#6B3A2A"/>
+  <rect x="18" y="10" width="4"  height="2" fill="#FC9838"/>
+  <!-- linha 2 do bigode: mais espesso e largo -->
+  <rect x="8"  y="12" width="12" height="2" fill="#6B3A2A"/>
+
+  <!-- PPP CAMISA (vermelho) PPP -->
+  <!-- linha superior com suspensório azul central -->
+  <rect x="6"  y="14" width="6"  height="2" fill="#CC0000"/>
+  <rect x="12" y="14" width="2"  height="2" fill="#2438C0"/>  <!-- suspensório -->
+  <rect x="14" y="14" width="6"  height="2" fill="#CC0000"/>
+  <!-- linha do peito -->
+  <rect x="4"  y="16" width="16" height="2" fill="#CC0000"/>
+  <!-- linha mais larga (braços começa a aparecer) -->
+  <rect x="2"  y="18" width="20" height="2" fill="#CC0000"/>
+
+  <!-- PPP MÃOS + CAMISA PPP -->
+  <rect x="0"  y="20" width="2"  height="2" fill="#FC9838"/>  <!-- mão esq -->
+  <rect x="2"  y="20" width="2"  height="2" fill="#CC0000"/>
+  <rect x="4"  y="20" width="2"  height="2" fill="#FC9838"/>  <!-- mão esq interna -->
+  <rect x="6"  y="20" width="12" height="2" fill="#CC0000"/>  <!-- camisa centro -->
+  <rect x="18" y="20" width="2"  height="2" fill="#FC9838"/>  <!-- mão dir interna -->
+  <rect x="20" y="20" width="2"  height="2" fill="#CC0000"/>
+  <rect x="22" y="20" width="2"  height="2" fill="#FC9838"/>  <!-- mão dir -->
+
+  <!-- PPP MACACÃO (overalls) PPP -->
+  <rect x="0"  y="22" width="2"  height="2" fill="#FC9838"/>  <!-- pele -->
+  <rect x="2"  y="22" width="4"  height="2" fill="#2438C0"/>  <!-- alça esq -->
+  <rect x="6"  y="22" width="8"  height="2" fill="#CC0000"/>  <!-- camisa visível -->
+  <rect x="14" y="22" width="4"  height="2" fill="#2438C0"/>  <!-- alça dir -->
+  <rect x="18" y="22" width="2"  height="2" fill="#FC9838"/>  <!-- pele -->
+
+  <!-- PPP PERNAS PPP -->
+  <!-- perna esquerda: cols 2-4 | gap col 5-6 | perna direita: cols 7-9 -->
+  <rect x="4"  y="24" width="6"  height="4" fill="#2438C0"/>  <!-- perna esq -->
+  <rect x="14" y="24" width="6"  height="4" fill="#2438C0"/>  <!-- perna dir -->
+
+  <!-- PPP SAPATOS PPP -->
+  <!-- mais largos que as pernas (estendem 1 pixel para cada lado) -->
+  <rect x="2"  y="28" width="10" height="2" fill="#7C3F00"/>  <!-- sapato esq -->
+  <rect x="14" y="28" width="10" height="2" fill="#7C3F00"/>  <!-- sapato dir -->
+  <!-- sola mais escura -->
+  <rect x="2"  y="30" width="10" height="2" fill="#4A2000"/>  <!-- sola esq -->
+  <rect x="14" y="30" width="10" height="2" fill="#4A2000"/>  <!-- sola dir -->
+
+</svg>
